@@ -2,7 +2,9 @@
 
 #include "ofMain.h"
 
-#include "particle.hpp" // Add this
+#include "enemy.hpp" // Add this
+#include "ship.hpp" // Add this
+
 
 #include <vector>
 using std::vector;
@@ -25,8 +27,11 @@ public:
     
     float xPos;
     float yPos;
+    bool gameOver = false;
     
-    vector<Particle> particle;   // Replaces the previous variables
+    vector<Enemy> enemy;
+    Ship ship;
+    // Replaces the previous variables
     // with a new object that contains
     // the previous information
 };

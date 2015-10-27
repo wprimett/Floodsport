@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "ofApp.h"
 
 //--------------------------------------------------------------
@@ -23,7 +25,7 @@ void ofApp::setup(){
         {
         for(int i = 0; i < 8; i++){
             //values read from file and put into class constuctor
-            particle.push_back(Particle(readX, readY));
+            enemy.push_back(Enemy(readX, readY, &ship));
         }
         }
         myfile.close();
@@ -33,20 +35,39 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-    
+    if ( std::any_of(enemy.begin(), enemy.end(), [this](Enemy enemy){return ofDist(enemy.x, enemy.y, ship.x, ship.y) < 80;}))
+    {
+                gameOver = true;
+                std:cout << "gameOver";
+                ship.color = (255, 0, 0);
+                for (auto & swarm : enemy){
+                    swarm.move(-0.01);
+                }
+    }else{
+      for (auto & swarm : enemy){
+          swarm.move(0.04);
+      }
+    }
+    //std::remove_if(enemy.begin(), enemy.end(), [this](Enemy enemy){return enemy.x > 300;});
 }
 
 void ofApp::draw(){
     ofBackgroundGradient(ofColor(190, 190, 190),ofColor(250,250,250), OF_GRADIENT_CIRCULAR);
     
     // Now we have a method that does the drawing stuff
-    for (auto swarm : particle){
-        swarm.moveTo(mouseX, mouseY);
+    for (auto & swarm : enemy){
+        ship.draw();
         swarm.draw();
     }
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if(key == OF_KEY_UP){
+        ship.up();
+    }
+    if(key == OF_KEY_DOWN){
+        ship.down();
+    }
 
 }
 
