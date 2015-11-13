@@ -14,16 +14,18 @@ Ship::Ship(): x(500), y(10){
     color.set(255, 255, 255);
 }
 
-void Ship::up(){
-    y -= 4;
+void Ship::update(float locX, float locY){
+    x += locX - x;
+    y += locY - y;
 }
 
-void Ship::down(){
-    y += 4;
+void Ship::enlarge(float rad){
+    size += rad;
 }
 
 void Ship::draw(){
+    ofSetCircleResolution(100);
     ofSetColor(color);
     ofFill();
-    ofCircle(x, y, 8);
+    ofDrawCircle(x, y, size);
 }

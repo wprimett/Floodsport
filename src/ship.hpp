@@ -18,13 +18,14 @@ public:
     Ship();
     
     // Methods
-    void up();
-    void down();
+    void update(float locX, float locY);
+    void enlarge(float rad);
     void draw();
     
     // Properties
     int x;
     int y;
+    float size = 8;
     ofColor color;
 };
 

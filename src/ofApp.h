@@ -2,9 +2,12 @@
 
 #include "ofMain.h"
 
-#include "enemy.hpp" // Add this
-#include "ship.hpp" // Add this
-
+//Add classes
+#include "part.hpp"
+#include "enemy.hpp"
+#include "ship.hpp"
+#include "ally.hpp"
+#include "terrain.hpp"
 
 #include <vector>
 using std::vector;
@@ -24,14 +27,17 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void newSwarm(int num);
     
     float xPos;
     float yPos;
-    bool gameOver = false;
     
+    //class arrays and variables
     vector<Enemy> enemy;
+    vector<Ally> ally;
+    //vector<Terrain> terrain;
     Ship ship;
-    // Replaces the previous variables
-    // with a new object that contains
-    // the previous information
+    
+    
+
 };

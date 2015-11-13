@@ -2,7 +2,7 @@
 
 Enemy::Enemy(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
     // Set the initial color
-    color.set( 200, 200, 200);
+    color.set( 200, 200, 100);
     
     //initial positions set in constructor
     x = _x;
@@ -15,7 +15,9 @@ void Enemy::move(float speed){
 }
 
 void Enemy::draw(){
+    ofSetCircleResolution(100);
+    size = 2;
     ofSetColor(color);
     ofFill();
-    ofCircle(x, y, 8);
+    ofDrawCircle(x, y, size);
 }
