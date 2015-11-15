@@ -1,10 +1,3 @@
-//
-//  ship.hpp
-//  Week3_apps
-//
-//  Created by William Primett on 20/10/2015.
-//
-//
 
 #ifndef ship_hpp
 #define ship_hpp
@@ -29,4 +22,4 @@ public:
     ofColor color;
 };
 
-#endif /* ship_hpp */
+#endif /* player_hpp */

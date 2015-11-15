@@ -3,10 +3,10 @@
 #include "ofMain.h"
 
 //Add classes
-#include "part.hpp"
-#include "enemy.hpp"
+//#include "part.hpp"
+#include "builder.hpp"
+#include "breaker.hpp"
 #include "ship.hpp"
-#include "ally.hpp"
 #include "terrain.hpp"
 
 #include <vector>
@@ -29,15 +29,21 @@ public:
     void gotMessage(ofMessage msg);
     void newSwarm(int num);
     
+    ofSoundPlayer soundtrack;
+    bool isMute = true;
+    
+    
     float xPos;
     float yPos;
+    float pointDist;
+    float attraction;
     
     //class arrays and variables
-    vector<Enemy> enemy;
-    vector<Ally> ally;
-    //vector<Terrain> terrain;
+    //Part part;
     Ship ship;
     
-    
+    vector<Builder> builder;
+    vector<Breaker> breaker;
+    vector<Terrain> terrain;
 
 };

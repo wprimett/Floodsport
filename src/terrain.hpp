@@ -6,7 +6,7 @@
 class Terrain {
 public:
     // Constructor
-    Terrain(int _x, int _y, int _w, int _h);
+    Terrain(string type, int _x, int _y, int _w, int _h);
     
     // Methods
     void draw();
@@ -16,6 +16,7 @@ public:
     int y;
     int w;
     int h;
-    ofColor initColor;
+    string type;
+    ofColor color;
 };
 #endif

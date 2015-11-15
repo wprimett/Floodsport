@@ -7,6 +7,3 @@
 //
 
 #include "part.hpp"
-#include "ship.hpp"
-
-Part::Part(

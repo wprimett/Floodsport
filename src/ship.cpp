@@ -1,5 +1,5 @@
 //
-//  ship.cpp
+//  Ship.cpp
 //  Week3_apps
 //
 //  Created by William Primett on 20/10/2015.
