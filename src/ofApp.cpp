@@ -48,7 +48,7 @@ void ofApp::setup(){
     
     for(int i = 0; i < 15; i++){
         builder.push_back(Builder(ofRandom(200), ofRandom(200), &ship));
-        breaker.push_back(Breaker(ofRandom(200), ofRandom(200), &ship));
+        breaker.push_back(Breaker(ofRandom(200), ofRandom(200), &ship, &builder[i]));
     
     }
 }
@@ -74,18 +74,24 @@ void ofApp::update(){
 
     if ( std::any_of(builder.begin(), builder.end(), [this](Builder builder){return ofDist(builder.x, builder.y, ship.x, ship.y) < ship.size;}))
     {
-
+        //player grows when particcle touches, player 'eats up' particals
         ship.enlarge(0.1);
-        //ship.color = (255, 0, 0);
-        breakAtrraction = 0;
+        //breakAtrraction = 0;
         //ofRemove(builder, checkDead);
 }
+    //removes points that touch player
+    //current bug where one point of batch doesn't delete
     std::remove_if(builder.begin(), builder.end(), [this](Builder builder){return ofDist(builder.x, builder.y, ship.x, ship.y) < ship.size;});
+    //plott new tree when player 'burns'
+    if( ship.size > 35){
+        terrain.push_back(Terrain("tree", ship.x, 720, 20, 400));
+    }
 }
 
 void ofApp::draw(){
     //background centre gradient
     ofBackgroundGradient(ofColor(245, 245, 250),ofColor(190,190,195), OF_GRADIENT_CIRCULAR);
+    ofPushMatrix();
     
     //player follows mouse
     ship.update(mouseX, mouseY);
@@ -102,6 +108,7 @@ void ofApp::draw(){
     for (auto & breakers : breaker){
         breakers.draw();
     }
+    ofPopMatrix();
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -167,7 +174,7 @@ void ofApp::newSwarm(int num){
     for(int i = 0; i < num; i++){
         //values read from file and put into class constuctor
         builder.push_back(Builder(ofRandom(200), ofRandom(200), &ship));
-        breaker.push_back(Breaker(ofRandom(200), ofRandom(200), &ship));
+        breaker.push_back(Breaker(ofRandom(200), ofRandom(200), &ship, &builder[i]));
     }
 }
 

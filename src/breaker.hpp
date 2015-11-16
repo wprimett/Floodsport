@@ -3,12 +3,14 @@
 
 #include "ofMain.h"
 #include "ship.hpp"
+#include "builder.hpp"
 
 class Breaker {
 public:
     // Constructor
-    Breaker(int _x, int _y, Ship *_ship);
+    Breaker(int _x, int _y, Ship *_ship, Builder *_builder);
     Ship *ship;
+    Builder *builder;
     
     // Methods
     void move(float speed);

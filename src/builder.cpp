@@ -19,11 +19,12 @@ void Builder::move(float speed){
     ofPoint shipPos = ofPoint(ship -> x, ship -> y);
     dist = shipPos - pos;
     
-    //let get the distance and only repel points close to the mouse
+    //let get the distance between point and player
     dist.normalize();
     vel *= drag;
     vel += dist * speed;
     
+    //add velocity to move points
     pos += vel;
     
     //updates x and y values for main program

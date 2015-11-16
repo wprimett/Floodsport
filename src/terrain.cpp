@@ -18,6 +18,7 @@ void Terrain::findType() {
         ofSetColor(color);
         ofNoFill();
         //generative terrain from noise
+        ofPushMatrix();
         ofBeginShape();
         for (int i=0; i < w; i++) {
             float t = 0.0;
@@ -29,7 +30,8 @@ void Terrain::findType() {
             ofVertex(i, ofGetHeight() - gndHeight);
             t+=step;
         }
-        ofEndShape(true);
+        ofEndShape();
+        ofPopMatrix;
 
     }else if( type == "water"){
         color.set(140, 190, 178, 150);

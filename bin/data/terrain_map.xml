@@ -2,7 +2,7 @@
     <terain
         type = "water"
         x = "600"
-        y = "730"
+        y = "600"
         width = "350"
         height = "100"
     />

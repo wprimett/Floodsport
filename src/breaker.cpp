@@ -1,6 +1,6 @@
 #include "breaker.hpp"
 
-Breaker::Breaker(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
+Breaker::Breaker(int _x, int _y, Ship *_ship, Builder *_builder): x(_x), y(_y), ship(_ship), builder(_builder){
     // Set the initial color
     color.set( 240, 96, 96 );
     
@@ -15,13 +15,25 @@ Breaker::Breaker(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
 }
 
 void Breaker::move(float speed){
-    ofPoint shipPos = ofPoint(ship -> x, ship -> y);
+    float uniqueVal = ofRandom(-10000, 10000);
+
+    ofPoint shipPos = ofPoint(builder -> x, builder -> y);
     dist = shipPos - pos;
     
-    //let get the distance and only repel points close to the mouse
     dist.normalize();
     vel *= drag;
     vel += dist * speed;
+    
+    //based of example template for now
+    //repels from builder parts
+    if( pos.distance(shipPos) < 150 ){
+        vel += -dist * 0.6; //repel points
+    }else{
+        dist.x = ofSignedNoise(uniqueVal, pos.y * 0.01, ofGetElapsedTimef()*0.2);
+        dist.y = ofSignedNoise(uniqueVal, pos.x * 0.01, ofGetElapsedTimef()*0.2);
+        vel += dist * 0.04;
+    }
+
     
     pos += vel;
     stayOnScreen();
