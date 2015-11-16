@@ -1,30 +1,30 @@
 <terrain_map>
     <terain
-        <type = "water"
+        type = "water"
         x = "600"
-        y = "600"
+        y = "730"
         width = "350"
-        height = "200"
+        height = "100"
     />
-<!--    <terain>-->
-<!--        <type>dirt</type>-->
-<!--        <x>0</x>-->
-<!--        <y>0</y>-->
-<!--        <width>1280</width>-->
-<!--        <height>980</height>-->
-<!--    </terain>-->
-<!--    <terain>-->
-<!--        <type>bridge</type>-->
-<!--        <x>100</x>-->
-<!--        <y>100</y>-->
-<!--        <width>200</width>-->
-<!--        <height>400</height>-->
-<!--    </terain>-->
-<!--    <terain>-->
-<!--        <type>tree</type>-->
-<!--        <x>500</x>-->
-<!--        <y>400</y>-->
-<!--        <width>20</width>-->
-<!--        <height>20</height>-->
-<!--    </terain>-->
-<!--</terrain_map>-->
+    <terain
+        type = "dirt"
+        x = "0"
+        y = "750"
+        width = "1500"
+        height = "300"
+    />
+    <terain
+        type = "bridge"
+        x = "725"
+        y = "680"
+        width = "120"
+        height = "20"
+    />
+    <terain
+        type = "tree"
+        x = "300"
+        y = "720"
+        width = "20"
+        height = "400"
+    />
+</terrain_map>

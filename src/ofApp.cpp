@@ -22,20 +22,23 @@ void ofApp::setup(){
     XML.setTo("terrain_map");
     
     int numPos = XML.getNumChildren();//get number of elements
-    for(int i = 0; i < numPos; i++){
-        XML.setToChild(i);
-        
-        string getType = XML.getAttribute("type");
-        float getX = ofToInt(XML.getAttribute("x"));
-        float getY = ofToInt(XML.getAttribute("y"));
-        float getWidth = ofToInt(XML.getAttribute("width"));
-        float getHeight = ofToInt(XML.getAttribute("hight"));
-        cout << "new terrain of type: " << getType << getX;
-
-        terrain.emplace_back(Terrain(getType, getX, getY, getWidth, getHeight));
-        XML.setToParent();
+        for(int i = 0; i < numPos; i++){
+            //gets root of each element
+            XML.setToChild(i);
+            
+            //finds and sets attributes for map
+            string getType = XML.getAttribute("type");
+            int getX = ofToInt(XML.getAttribute("x"));
+            int getY = ofToInt(XML.getAttribute("y"));
+            int getWidth = ofToInt(XML.getAttribute("width"));
+            int getHeight = ofToInt(XML.getAttribute("height"));
+            
+            //creates terrain objects
+            //class will use data values to formulate terrain parts to produce a set map
+            terrain.push_back(Terrain(getType, getX, getY, getWidth, getHeight));
+            //resets xml setting point, gets each terrain part for each iteration of the loop
+            XML.setToParent();
     }
-    
     
     // Smooth edges
     ofEnableSmoothing();
@@ -57,13 +60,14 @@ void ofApp::update(){
         soundtrack.setVolume(0.8);
     }
     
-    attraction = 0.02;
+    attraction = 0.04;
+    breakAtrraction = 0.01;
     
     for (auto & builders : builder){
         builders.move(attraction);
     }
-    for (auto & destructors : breaker){
-        destructors.move(attraction/2);
+    for (auto & breakers : breaker){
+        breakers.move(breakAtrraction);
     }
     
     //part.move(attraction);
@@ -71,35 +75,33 @@ void ofApp::update(){
     if ( std::any_of(builder.begin(), builder.end(), [this](Builder builder){return ofDist(builder.x, builder.y, ship.x, ship.y) < ship.size;}))
     {
 
-        
         ship.enlarge(0.1);
         //ship.color = (255, 0, 0);
-        attraction = 0.005;
-        builder.kill();
-        //std::remove_if(builder.begin(), builder.end(), [this](Builder builder){return ofDist(builder.x, builder.y, ship.x, ship.y) < ship.size;});
+        breakAtrraction = 0;
+        //ofRemove(builder, checkDead);
 }
-    ofRemove(builder, isDead);
+    std::remove_if(builder.begin(), builder.end(), [this](Builder builder){return ofDist(builder.x, builder.y, ship.x, ship.y) < ship.size;});
 }
 
 void ofApp::draw(){
     //background centre gradient
     ofBackgroundGradient(ofColor(245, 245, 250),ofColor(190,190,195), OF_GRADIENT_CIRCULAR);
     
+    //player follows mouse
     ship.update(mouseX, mouseY);
     ship.draw();
     
     //part.draw();
-    // Now we have a method that does the drawing stuff
-    for (auto & water : terrain){
-        water.draw();
+    //draw all elements of vector objects
+    for (auto & terrain : terrain){
+        terrain.draw();
     }
     for (auto & builders : builder){
         builders.draw();
     }
-    for (auto & destructors : breaker){
-        destructors.draw();
+    for (auto & breakers : breaker){
+        breakers.draw();
     }
-
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -167,4 +169,8 @@ void ofApp::newSwarm(int num){
         builder.push_back(Builder(ofRandom(200), ofRandom(200), &ship));
         breaker.push_back(Breaker(ofRandom(200), ofRandom(200), &ship));
     }
+}
+
+bool ofApp::checkDead( Builder &b ){
+    return b.isDead;
 }

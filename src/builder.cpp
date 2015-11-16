@@ -25,13 +25,17 @@ void Builder::move(float speed){
     vel += dist * speed;
     
     pos += vel;
-    //runs function for each particle
-    stayOnScreen();
     
     //updates x and y values for main program
     //is it possible to do this automatically with pointers??
     x = pos.x;
     y = pos.y;
+    
+    //runs function for each particle
+    stayOnScreen();
+    if (pos.distance( shipPos ) < ship -> size){
+        isDead = true;
+    }
 }
 
 void Builder::stayOnScreen(){
@@ -58,8 +62,6 @@ void Builder::stayOnScreen(){
 void Builder::kill(){
     isDead = true;
 }
-
-
 
 void Builder::draw(){
     ofSetCircleResolution(100);

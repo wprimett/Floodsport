@@ -8,6 +8,11 @@
 #include "breaker.hpp"
 #include "ship.hpp"
 #include "terrain.hpp"
+#include "dirt.hpp"
+#include "water.hpp"
+#include "bridge.hpp"
+#include "tree.hpp"
+
 
 #include <vector>
 using std::vector;
@@ -28,6 +33,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void newSwarm(int num);
+    bool checkDead(Builder &b);
     
     ofSoundPlayer soundtrack;
     bool isMute = true;
@@ -37,13 +43,17 @@ public:
     float yPos;
     float pointDist;
     float attraction;
+    float breakAtrraction;
     
     //class arrays and variables
-    //Part part;
     Ship ship;
     
+    //Part part;
     vector<Builder> builder;
     vector<Breaker> breaker;
     vector<Terrain> terrain;
-
+    vector<Dirt> dirt;
+    vector<Water> water;
+    vector<Bridge> bridge;
+    vector<Tree> tree;
 };
