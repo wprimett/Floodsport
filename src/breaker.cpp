@@ -1,8 +1,8 @@
 #include "breaker.hpp"
 
-Breaker::Breaker(int _x, int _y, Ship *_ship, Builder *_builder): x(_x), y(_y), ship(_ship), builder(_builder){
+Breaker::Breaker(int _x, int _y, Builder *_builder): x(_x), y(_y), builder(_builder){
     // Set the initial color
-    color.set( 240, 96, 96 );
+    color.set( 255, 127, 127 );
     
     //initial positions set in constructor
     x = _x;
@@ -16,7 +16,7 @@ Breaker::Breaker(int _x, int _y, Ship *_ship, Builder *_builder): x(_x), y(_y), 
 
 void Breaker::move(float speed){
     float uniqueVal = ofRandom(-10000, 10000);
-
+    
     ofPoint shipPos = ofPoint(builder -> x, builder -> y);
     dist = shipPos - pos;
     
@@ -33,7 +33,6 @@ void Breaker::move(float speed){
         dist.y = ofSignedNoise(uniqueVal, pos.x * 0.01, ofGetElapsedTimef()*0.2);
         vel += dist * 0.04;
     }
-
     
     pos += vel;
     stayOnScreen();
@@ -49,7 +48,7 @@ void Breaker::stayOnScreen(){
         pos.x = 0;
         vel.x *= -1.0;
     }
-    if( pos.y > ofGetHeight() ){
+    if( pos.y > ofGetHeight()){
         pos.y = ofGetHeight();
         vel.y *= -1.0;
     }

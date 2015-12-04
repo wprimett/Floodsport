@@ -2,6 +2,7 @@
 #define tree_hpp
 
 #include "ofMain.h"
+#include "ofxLiquidFun.h"
 
 class Tree {
 public:
@@ -17,5 +18,8 @@ public:
     int w;
     int h;
     ofColor color;
+    
+    ofVec2f pos;
+    
 };
 #endif

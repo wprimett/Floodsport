@@ -2,7 +2,7 @@
 
 Builder::Builder(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
     // Set the initial color
-    color.set( 62, 44, 44);
+    color.set( 248, 230, 230);
     
     //initial positions set in constructor
     x = _x;
@@ -12,7 +12,6 @@ Builder::Builder(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
     dist = ofPoint(0,0);
     vel.set(ofRandom(-3.9, 3.9), ofRandom(-3.9, 3.9));
     drag  = ofRandom(0.95, 0.998);
-    isDead = false;
 }
 
 void Builder::move(float speed){
@@ -22,10 +21,10 @@ void Builder::move(float speed){
     //let get the distance between point and player
     dist.normalize();
     vel *= drag;
-    vel += dist * speed;
+    vel += dist;
     
     //add velocity to move points
-    pos += vel;
+    pos += vel * speed;
     
     //updates x and y values for main program
     //is it possible to do this automatically with pointers??
@@ -56,7 +55,7 @@ void Builder::stayOnScreen(){
     else if( pos.y < 0 ){
         pos.y = 0;
         vel.y *= -1.0;
-    }	
+    }
     
 }
 

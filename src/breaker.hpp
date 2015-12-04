@@ -8,14 +8,17 @@
 class Breaker {
 public:
     // Constructor
-    Breaker(int _x, int _y, Ship *_ship, Builder *_builder);
-    Ship *ship;
+    Breaker(int _x, int _y, Builder *_builder);
     Builder *builder;
     
     // Methods
     void move(float speed);
     void draw();
     void stayOnScreen();
+    //destructor
+//    ~Breaker() {
+//        delete builder;
+//    }
     
     // Properties
     int x;

@@ -2,7 +2,7 @@
     <terain
         type = "water"
         x = "600"
-        y = "600"
+        y = "750"
         width = "350"
         height = "100"
     />
@@ -13,18 +13,34 @@
         width = "1500"
         height = "300"
     />
+    
     <terain
         type = "bridge"
         x = "725"
-        y = "680"
+        y = "700"
         width = "120"
-        height = "20"
+        height = "2"
     />
+    <terain
+    type = "bridge"
+    x = "325"
+    y = "400"
+    width = "120"
+    height = "2"
+    />
+    <terain
+    type = "bridge"
+    x = "575"
+    y = "200"
+    width = "120"
+    height = "2"
+    />
+    
     <terain
         type = "tree"
         x = "300"
-        y = "720"
-        width = "20"
+        y = "820"
+        width = "2"
         height = "400"
     />
 </terrain_map>

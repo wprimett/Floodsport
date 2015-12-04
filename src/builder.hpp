@@ -16,12 +16,18 @@ public:
     void stayOnScreen();
     void kill();
     
+    //destructor
+    ~Builder() {
+        //delete ship;
+    }
+    
     // Properties
     int x;
     int y;
     float size;
     float drag;
     bool isDead;
+    
     
     ofColor color;
     ofPoint pos;
