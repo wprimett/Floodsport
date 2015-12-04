@@ -96,11 +96,13 @@ void ofApp::update() {
     breakAtrraction = 0.08;
     
     //runs moving function for all floating particels
+    //takes ship address to use as pointer
     for (auto & builders : builder){
-        builders.move(attraction);
+        builders.move(attraction, &ship);
     }
-    for (auto & breakers : breaker){
-        breakers.move(breakAtrraction);
+    //each breaker point takes it's paried builder point so both groups of particles can intereact
+    for (int i = 0; i < breaker.size(); i++) {
+        breaker[i].move(breakAtrraction, &builder[i]);
     }
     
     circles.back().get()->setRadius(playerRad);
@@ -182,17 +184,17 @@ void ofApp::draw() {
     ofPushMatrix();
 
     ofSetColor(248, 230, 230);
-    //textFade("floodsport", platform[0].pos);
+    textFade("floodsport", platform[0].pos);
     
     //if ship isn't moving show message
-//    if (!ship.checkMoving()) {
-//        ofPushStyle();
-//        ofSetColor(248, 230, 230);
-//        string idle = " ";
-//        idle += "get up";
-//        font.drawString(idle, tree[tCount].x, tree[tCount].y);
-//        ofPopStyle();
-//    }
+    if (!ship.checkMoving()) {
+        ofPushStyle();
+        ofSetColor(248, 230, 230);
+        string idle = " ";
+        idle += "get up";
+        font.drawString(idle, tree[tCount].x, tree[tCount].y);
+        ofPopStyle();
+    }
     if (ship.checkWon()){
         ofPushStyle();
         ofSetColor(248, 230, 230);
@@ -241,14 +243,6 @@ void ofApp::mouseMoved(int x, int y ) {
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button) {
-//    for (int i = 0; i < 20; i++) {
-//        float radius = 40;
-//        float x = cos(ofRandom(PI*2.0)) * radius + mouseX;
-//        float y = sin(ofRandom(PI*2.0)) * radius + mouseY;
-//        ofVec2f position = ofVec2f(x, y);
-//        ofVec2f velocity = ofVec2f(ofRandom(-200, 200), ofRandom(-200, 200));
-//        particles.createParticle(position, velocity);
-//    }
 }
 
 //--------------------------------------------------------------
@@ -326,7 +320,7 @@ void ofApp::newBridge(int num, ofVec2f start, ofVec2f end, float delta){
         face.get()->addVertex(x1, ofGetHeight() - bHeight * delta - tCount * 150);
         face.get()->addVertex(x2, ofGetHeight() - bHeight * delta - tCount * 150);
         t += step;
-    
+        
         //initialise edge object
         face.get()->create(box2d.getWorld());
         bridge.push_back(face); //add joints to the array
@@ -337,12 +331,12 @@ void ofApp::newSwarm(int num){
     //new swarm of floating particles  spawns in middle
     for (int i = 0; i < num; i++) {
        //values read from file and put into class constuctor
-        //takes ship address to use as pointer
         builder.push_back(Builder(ofRandom(centre.x-200, centre.x + 200),
-                          ofRandom(centre.y-200, centre.y + 200), &ship));
+                          ofRandom(centre.y-200, centre.y + 200)));
+
         //each breaker point takes it's paried builder point so both groups of particles can intereact
         breaker.push_back(Breaker(ofRandom(centre.x, centre.x + 200),
-                                  ofRandom(centre.y, centre.y - 200), &builder[i]));
+                                  ofRandom(centre.y, centre.y - 200)));
     }
 }
 
@@ -400,20 +394,19 @@ void ofApp::drawMap(){
     ofSetColor(248, 230, 230);
     
     for(int i=0; i<platform.size(); i++) {
-    boxes.push_back(ofPtr<ofxBox2dRect>(new ofxBox2dRect));
-    boxes.back().get()->setPhysics(0, 0.63, 0.9);
-    boxes.back().get()->setup(box2d.getWorld(), platform[i].x, platform[i].y, platform[i].w, platform[i].h);
+        //takes static class objects to construct box2d object
+    shared_ptr <ofxBox2dEdge> face = shared_ptr<ofxBox2dEdge>(new ofxBox2dEdge);
+    face.get()->addVertex(platform[i].x, platform[i].y);
+    face.get()->addVertex(platform[i].x + platform[i].w, platform[i].y + platform[i].h);
+        
+    //initialise edge object
+    face.get()->create(box2d.getWorld());
+    bridge.push_back(face); //add joints to the array
     }
     
     for (int i=0; i<ground.size(); i++) {
         //points to function in class
         ground[i].get()->draw();
-    }
-    for (int i=0; i<boxes.size(); i++) {
-        ofPushStyle();
-        ofSetColor(255, 127, 127);
-        boxes[i].get()->draw();
-        ofPopStyle();
     }
     for (int i=0; i<bridge.size(); i++) {
         bridge[i].get()->draw();
@@ -432,7 +425,7 @@ void ofApp::restart(){
     ship.counter = 0;
     tree.erase(tree.begin() + 1, tree.end());//clear all trees except first
     //remove any created objects from last game
-    bridge.clear();
+    //bridge.clear();
     builder.clear();
     breaker.clear();
     newSwarm(10);

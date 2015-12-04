@@ -1,6 +1,6 @@
 #include "breaker.hpp"
 
-Breaker::Breaker(int _x, int _y, Builder *_builder): x(_x), y(_y), builder(_builder){
+Breaker::Breaker(int _x, int _y): x(_x), y(_y){
     // Set the initial color
     color.set( 255, 127, 127 );
     
@@ -14,10 +14,13 @@ Breaker::Breaker(int _x, int _y, Builder *_builder): x(_x), y(_y), builder(_buil
     drag  = ofRandom(0.95, 0.998);
 }
 
-void Breaker::move(float speed){
+//takes builder object pointer
+void Breaker::move(float speed, Builder *builder){
+
     float uniqueVal = ofRandom(-10000, 10000);
     
-    ofPoint shipPos = ofPoint(builder -> x, builder -> y);
+    //refers to positon of poited object
+    ofPoint shipPos = ofPoint(builder -> x, builder -> y);;
     dist = shipPos - pos;
     
     dist.normalize();
@@ -36,6 +39,12 @@ void Breaker::move(float speed){
     
     pos += vel;
     stayOnScreen();
+    
+    //free memory allocation of pointer
+    //stops memory leak
+    builder = new Builder(builder -> x, builder -> y);
+    delete builder;
+    builder = NULL;
 }
 
 void Breaker::stayOnScreen(){

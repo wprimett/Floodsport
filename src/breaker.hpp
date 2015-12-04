@@ -2,23 +2,21 @@
 #define breaker_h
 
 #include "ofMain.h"
-#include "ship.hpp"
+//point to builder header for constructor reference
 #include "builder.hpp"
 
 class Breaker {
+
+
 public:
     // Constructor
-    Breaker(int _x, int _y, Builder *_builder);
-    Builder *builder;
+    Breaker(int _x, int _y);
     
     // Methods
-    void move(float speed);
+    void move(float speed, Builder *builder);
     void draw();
     void stayOnScreen();
     //destructor
-//    ~Breaker() {
-//        delete builder;
-//    }
     
     // Properties
     int x;

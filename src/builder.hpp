@@ -7,20 +7,14 @@
 class Builder {
 public:
     // Constructor
-    Builder(int _x, int _y, Ship *_ship);
-    Ship *ship;
+    Builder(int _x, int _y);
     
     // Methods
-    void move(float speed);
+    void move(float speed, Ship *ship);
     void draw();
     void stayOnScreen();
     void kill();
-    
-    //destructor
-    ~Builder() {
-        //delete ship;
-    }
-    
+        
     // Properties
     int x;
     int y;

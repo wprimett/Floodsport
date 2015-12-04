@@ -1,6 +1,7 @@
 #include "builder.hpp"
 
-Builder::Builder(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
+Builder::Builder(int _x, int _y): x(_x), y(_y){
+
     // Set the initial color
     color.set( 248, 230, 230);
     
@@ -14,7 +15,9 @@ Builder::Builder(int _x, int _y, Ship *_ship): x(_x), y(_y), ship(_ship){
     drag  = ofRandom(0.95, 0.998);
 }
 
-void Builder::move(float speed){
+//takes ship object pointer
+void Builder::move(float speed, Ship *ship){
+    //uses pointer to refer to ship position
     ofPoint shipPos = ofPoint(ship -> x, ship -> y);
     dist = shipPos - pos;
     
@@ -33,9 +36,10 @@ void Builder::move(float speed){
     
     //runs function for each particle
     stayOnScreen();
-    if (pos.distance( shipPos ) < ship -> size){
-        isDead = true;
-    }
+    
+    ship = new Ship;
+    delete ship;
+    ship = NULL;
 }
 
 void Builder::stayOnScreen(){

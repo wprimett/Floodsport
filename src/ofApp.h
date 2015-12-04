@@ -88,7 +88,8 @@ public:
     b2Filter filter;
     vector <shared_ptr<ofxBox2dEdge> > ground;
     vector <shared_ptr<ofxBox2dEdge> > bridge;
-    vector <ofPtr<ofxBox2dCircle> >	circles;    //player circle with pysics
-    vector <ofPtr<ofxBox2dRect> > boxes;			  //	defalut box2d rects
+   // vector <ofPtr<ofxBox2dCircle> >	circles;    //player circle with pysics
+     vector <shared_ptr<ofxBox2dCircle> >	circles;    //player circle with pysics
+
     ofxBox2dParticleSystem particles;			      //    LiquidFun particle system
 };
