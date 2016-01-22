@@ -1,5 +1,5 @@
 http://gitlab.doc.gold.ac.uk/wprim001/DataSwarm.git
-# Watersports
+# Floodsport
 
 This is a simple single player game where the player controls a ball, clicking rhythmically to control the timing of each and bounce and using the irregular terrain to jump side to side. The goal is to reach the top. This is to be done by bouncing up bridges created as you collect builder particles. Breaker particles on the other hand should be avoided along with the water that floods the terrain throughout for this will constrain your bounce.
 
